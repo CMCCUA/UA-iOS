@@ -1,4 +1,3 @@
-# UA-iOS
 中国移动统一认证中间件面向客户端应用／插件提供用户认证服务。用户在终端设备上，一次认证即可自由登录所有业务。在插有中国移动SIM卡的终端上，中间件可以利用网络和SIM卡能力提供自动登录服务，登录过程对终端用户来说几乎无感知。
 终端应用／插件可通过集成统一认证SDK调用中间件能力，减少开发者的开发难度。
 
@@ -47,6 +46,12 @@
 直接将统一认证TYRZSDK.framework拖到项目中即可
 
 ![](image/15028662411209.jpg)
+
+在Xcode中找到TARGETS-->Build Setting-->Linking-->Other Linker Flags
+在这选项中需要添加-ObjC
+![](image/1502866241120100.jpg)
+再来到TARGETS-->Build Setting-->搜索框中搜索"BitCode"选项,并且将该选项的属设置为NO
+![](image/1502866241120101.jpg)
 
 # 4.Hello 统一认证 
 
