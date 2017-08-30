@@ -47,10 +47,10 @@
 
 ![](image/15028662411209.jpg)
 
-在Xcode中找到TARGETS-->Build Setting-->Linking-->Other Linker Flags
+3.1在Xcode中找到TARGETS-->Build Setting-->Linking-->Other Linker Flags
 在这选项中需要添加-ObjC
 ![](image/1502866241120100.jpg)
-再来到TARGETS-->Build Setting-->搜索框中搜索"BitCode"选项,并且将该选项的属设置为NO
+3.2再来到TARGETS-->Build Setting-->搜索框中搜索"BitCode"选项,并且将该选项的属设置为NO
 ![](image/1502866241120101.jpg)
 
 # 4.Hello 统一认证 
