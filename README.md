@@ -85,7 +85,7 @@
 ```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [TYRZBaseApi customInit:@"10000001" clientSecret:@"20118F70E4F34C64" redirectURL:nil];
+     [TYRZBaseApi customInit:APPID appKey:APPKEY sourceID:SOURCEID];
     return YES;
 }
 ```
@@ -122,7 +122,7 @@
 
 # 5.SDK接口说明
 
-## 5.1. TYRZBaseApi.h中的customInit:clientSecret: redirectURL:方法
+## 5.1. TYRZBaseApi.h中的customInit:appKey:sourceID:方法
 
 ### 5.1.1. 接口说明
 
@@ -134,7 +134,7 @@
 **原型**
 
 ```objective-c
-+ (void)customInit:(NSString *)clientID clientSecret:(NSString *)clientSecret redirectURL:(NSString *)redirect;
++ (void)customInit:(NSString *)appID appKey:(NSString *)appKey sourceID:(NSString *)sourceID;
 ```
 
 ### 5.1.2. 参数说明
@@ -142,11 +142,11 @@
 **输入**
 
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| clientID | NSString | 应用的appid |
-|clientSecret |NSString |应用密钥 |
-|redirect|NSString|重定向地址|
+| 参数 | 类型 | 说明 |是否必填 |
+| --- | --- | --- | --- |
+| appID | NSString | 应用的appid | 是|
+|appKey |NSString |应用密钥 | 是|
+|sourceID|NSString|	业务ID| 是|
 
 **输出**
 
@@ -157,7 +157,7 @@
 **代码**
 
 ```objective-c
-[TYRZBaseApi customInit:@"xxx" clientSecret:@"xxxxxx" redirectURL:nil];
+ [TYRZBaseApi customInit:APPID appKey:APPKEY sourceID:SOURCEID];
 ```
 
 **返回**
@@ -183,10 +183,10 @@
 **输入**
 
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| token | NSString | 需要校验的token |
-|complete|UAFinishBlock|校验token的回调 |
+| 参数 | 类型 | 说明 |是否必填 |
+| --- | --- | --- | --- |
+| token | NSString | 需要校验的token |是 | 
+|complete|UAFinishBlock|校验token的回调 | 否|
 
 **输出**
 
@@ -311,10 +311,67 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 无
 
-## 5.4. TYRZLogin.h中的loginImplicitly方法
+## 5.4. TYRZBaseApi.h中的checkPhone:complete:方法
 
 
 ### 5.4.1 接口说明
+
+**功能**
+
+本机号码校验，校验传入号码与本机号码是否为同一号码
+
+**原型**
+
+```objective-c
++ (void)checkPhone:(NSString *)phone complete:(UAFinishBlock)complete;
+```
+
+### 5.4.2 参数说明
+
+**输入**
+
+
+| 参数 | 类型 | 说明 | 是否必填|
+| --- | --- | --- | --- |
+| phone | NSString | 传入手机号 | 是 |
+| complete | UAFinishBlock | 登录回调 | 是 |
+
+
+**输出**
+
+
+| 参数 | 类型 | 说明 | 是否必填 |
+| --- | --- | --- | --- |
+| resultCode | NSUinteger | 返回相应的结果码 | 是|
+| islocalmobile |NSString| true表示输入号码为本机号码  | 是|
+| desc | NSString | 调用描述 | 是|
+
+
+### 5.4.3 示例
+
+**代码**
+
+```objective-c
+   [TYRZBaseApi checkPhone:self.phoneTf.text complete:^(id sender) {
+        NSLog(@"%@",sender);
+    }];
+```
+
+**返回**
+
+```
+{
+	desc = "success",
+	islocalmobile = "true",
+	resultCode = "102000",
+}
+```
+
+
+## 5.5. TYRZLogin.h中的loginImplicitly方法
+
+
+### 5.5.1 接口说明
 
 **功能**
 
@@ -326,29 +383,30 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginImplicitly:(void (^)(id sender))complete;
 ```
 
-### 5.4.2 参数说明
+### 5.5.2 参数说明
 
 **输入**
 
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| complete | UAFinishBlock | 登录回调 |
+| 参数 | 类型 | 说明 | 是否必填|
+| --- | --- | --- | --- |
+| complete | UAFinishBlock | 登录回调 | 是|
 
 
 **输出**
 
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| resultCode | NSUinteger | 返回相应的结果码 |
-| token | NSString | 登录时需要的token |
-| userName | NSString | 手机掩码 |
-| passid |NSString| 和通行证ID |
-| desc | NSString | 调用描述 |
+| 参数 | 类型 | 说明 | 是否必填|是否必填 |
+| --- | --- | --- | --- |
+| resultCode | NSUinteger | 返回相应的结果码 | 是|
+| token | NSString | 登录时需要的token | 成功时必填|
+| passId |NSString| 和通行证ID | 成功时必填|
+|authType|NSString|认证类型(详见附录1)|成功时必填 |
+|authTypeDes|NSString|认证类型描述(详见附录1)| 成功时必填|
+| desc | NSString | 调用描述 |否 |
 
 
-### 5.4.3 示例
+### 5.5.3 示例
 
 **代码**
 
@@ -391,10 +449,10 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 
 
-## 5.5.TYRZUILogin.h中的loginSMS: complete:方法
+## 5.6.TYRZUILogin.h中的loginSMS: complete:方法
 
 
-### 5.5.1 接口说明
+### 5.6.1 接口说明
 
 **功能**
 
@@ -406,29 +464,31 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginSMS:(UIViewController *)vc complete:(void (^)(id sender))complete;
 ```
 
-### 5.5.2 参数说明
+### 5.6.2 参数说明
 
 **输入**
 
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| vc | UIViewController | 调用短信验证码登录所在的vc |
-| complete | UAFinishBlock | 登录回调  |
+| 参数 | 类型 | 说明 | 是否必填|
+| --- | --- | --- | --- |
+| vc | UIViewController | 调用短信验证码登录所在的vc | 是|
+| complete | UAFinishBlock | 登录回调  |是 |
 
 
 **输出**
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-|resultCode|NSUinteger|返回相应的结果码|
-|token|NSString|登录时需要的token|
-|userName|NSString|手机掩码|
-|passid|NSString|和通行证ID|
-|desc|NSString|调用描述|
+| 参数 | 类型 | 说明 | 是否必填|是否必填 |
+| --- | --- | --- | --- |
+| resultCode | NSUinteger | 返回相应的结果码 | 是|
+| token | NSString | 登录时需要的token | 成功时必填|
+| passId |NSString| 和通行证ID | 成功时必填|
+|authType|NSString|认证类型(详见附录1)|成功时必填 |
+|authTypeDes|NSString|认证类型描述(详见附录1)| 成功时必填|
+| desc | NSString | 调用描述 |否 |
 
 
-### 5.5.3 示例
+
+### 5.6.3 示例
 
 **代码**
 
@@ -460,9 +520,9 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 }
 ```
 
-## 5.6.TYRZUILogin中的loginExplicitly:complete:方法
+## 5.7.TYRZUILogin中的loginExplicitly:complete:方法
 
-### 5.6.1 接口说明
+### 5.7.1 接口说明
 
 **功能**
 
@@ -474,26 +534,28 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginExplicitly:(UIViewController *)vc complete:(void (^)(id sender))complete;
 ```
 
-### 5.6.2 参数说明
+### 5.7.2 参数说明
 
 **输入**
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| vc | UIViewController | 调用短信验证码登录所在的vc |
-| complete | UAFinishBlock | 登录回调  |
-
+| 参数 | 类型 | 说明 | 是否必填 |
+| --- | --- | --- | --- |
+| vc | UIViewController | 调用短信验证码登录所在的vc | 是|
+| complete | UAFinishBlock | 登录回调  |是 |
+ 
 **输出**
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-|resultCode|NSUinteger|返回相应的结果码|
-|token|NSString|登录时需要的token|
-|userName|NSString|手机掩码|
-|passid|NSString|和通行证ID|
-|desc|NSString|调用描述|
+| 参数 | 类型 | 说明 | 是否必填|是否必填 |
+| --- | --- | --- | --- |
+| resultCode | NSUinteger | 返回相应的结果码 | 是|
+| token | NSString | 登录时需要的token | 成功时必填|
+| passId |NSString| 和通行证ID | 成功时必填|
+|authType|NSString|认证类型(详见附录1)|成功时必填 |
+|authTypeDes|NSString|认证类型描述(详见附录1)| 成功时必填|
+| desc | NSString | 调用描述 |否 |
 
-### 5.6.3 示例
+
+### 5.7.3 示例
 
 **代码**
 
@@ -529,10 +591,10 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 }
 ```
 
-## 5.7. TYRZUILogin.h中的setCustomSMS方法
+## 5.8. TYRZUILogin.h中的setCustomSMS方法
 
 
-### 5.7.1 接口说明
+### 5.8.1 接口说明
 
 **功能**
 
@@ -544,20 +606,20 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)setCustomSMS:(BOOL)enable;
 ```
 
-### 5.7.2 参数说明
+### 5.8.2 参数说明
 
 **输入**
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-|enable|BOOL|YES时显示登录取号失败会跳转至短信验证码界面|
+| 参数 | 类型 | 说明 | 是否必填|
+| --- | --- | --- | --- |
+|enable|BOOL|YES时显示登录取号失败会跳转至短信验证码界面|是 |
 
 
 **输出**
 
 无
 
-### 5.7.3 示例
+### 5.8.3 示例
 
 **代码**
 
@@ -794,11 +856,20 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 | 105009 | 解析失败 |
 
 
+# 附录
+
+## 附录1:认证方法标识
 
 
-
-
-
-
+|authType|authTypeDes|
+|--- | --- |
+|0|其他（超时无法确认认证类型，返回0）|
+| 1|WIFI下网关鉴权|
+| 2|网关鉴权|
+| 3|短信上行鉴权|
+| 4|WIFI下网关鉴权复用中间件登录|
+| 5|网关鉴权复用中间件登录|
+|6|短信上行鉴权复用中间件登录|
+|7|短信验证码登录|
 
 
