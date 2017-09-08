@@ -396,15 +396,16 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 **输出**
 
 
-| 参数 | 类型 | 说明 | 是否必填|是否必填 |
+| 参数 | 类型 | 说明 | 是否必填|
 | --- | --- | --- | --- |
 | resultCode | NSUinteger | 返回相应的结果码 | 是|
 | token | NSString | 登录时需要的token | 成功时必填|
 | passId |NSString| 和通行证ID | 成功时必填|
-|authType|NSString|认证类型(详见附录1)|成功时必填 |
+|authType|NSString|认证类型(详见附录1) |成功时必填 |
 |authTypeDes|NSString|认证类型描述(详见附录1)| 成功时必填|
 | desc | NSString | 调用描述 |否 |
 
+|
 
 ### 5.5.3 示例
 
@@ -478,7 +479,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 **输出**
 
-| 参数 | 类型 | 说明 | 是否必填|是否必填 |
+| 参数 | 类型 | 说明 | 是否必填|
 | --- | --- | --- | --- |
 | resultCode | NSUinteger | 返回相应的结果码 | 是|
 | token | NSString | 登录时需要的token | 成功时必填|
@@ -548,7 +549,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
  
 **输出**
 
-| 参数 | 类型 | 说明 | 是否必填|是否必填 |
+| 参数 | 类型 | 说明 | 是否必填|
 | --- | --- | --- | --- |
 | resultCode | NSUinteger | 返回相应的结果码 | 是|
 | token | NSString | 登录时需要的token | 成功时必填|
