@@ -311,67 +311,11 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 无
 
-## 5.4. TYRZBaseApi.h中的checkPhone:complete:方法
+
+## 5.4. TYRZLogin.h中的loginImplicitly方法
 
 
 ### 5.4.1 接口说明
-
-**功能**
-
-本机号码校验，校验传入号码与本机号码是否为同一号码
-
-**原型**
-
-```objective-c
-+ (void)checkPhone:(NSString *)phone complete:(UAFinishBlock)complete;
-```
-
-### 5.4.2 参数说明
-
-**输入**
-
-
-| 参数 | 类型 | 说明 | 是否必填|
-| --- | --- | --- | --- |
-| phone | NSString | 传入手机号 | 是 |
-| complete | UAFinishBlock | 登录回调 | 是 |
-
-
-**输出**
-
-
-| 参数 | 类型 | 说明 | 是否必填 |
-| --- | --- | --- | --- |
-| resultCode | NSUinteger | 返回相应的结果码 | 是|
-| islocalmobile |NSString| true表示输入号码为本机号码  | 是|
-| desc | NSString | 调用描述 | 是|
-
-
-### 5.4.3 示例
-
-**代码**
-
-```objective-c
-   [TYRZBaseApi checkPhone:self.phoneTf.text complete:^(id sender) {
-        NSLog(@"%@",sender);
-    }];
-```
-
-**返回**
-
-```
-{
-	desc = "success",
-	islocalmobile = "true",
-	resultCode = "102000",
-}
-```
-
-
-## 5.5. TYRZLogin.h中的loginImplicitly方法
-
-
-### 5.5.1 接口说明
 
 **功能**
 
@@ -383,7 +327,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginImplicitly:(void (^)(id sender))complete;
 ```
 
-### 5.5.2 参数说明
+### 5.4.2 参数说明
 
 **输入**
 
@@ -407,7 +351,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 |
 
-### 5.5.3 示例
+### 5.4.3 示例
 
 **代码**
 
@@ -451,10 +395,10 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 
 
-## 5.6.TYRZUILogin.h中的loginSMS: complete:方法
+## 5.5.TYRZUILogin.h中的loginSMS: complete:方法
 
 
-### 5.6.1 接口说明
+### 5.5.1 接口说明
 
 **功能**
 
@@ -466,7 +410,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginSMS:(UIViewController *)vc complete:(void (^)(id sender))complete;
 ```
 
-### 5.6.2 参数说明
+### 5.5.2 参数说明
 
 **输入**
 
@@ -490,7 +434,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 
 
-### 5.6.3 示例
+### 5.5.3 示例
 
 **代码**
 
@@ -524,9 +468,9 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 ```
 
-## 5.7.TYRZUILogin中的loginExplicitly:complete:方法
+## 5.6.TYRZUILogin中的loginExplicitly:complete:方法
 
-### 5.7.1 接口说明
+### 5.6.1 接口说明
 
 **功能**
 
@@ -538,7 +482,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginExplicitly:(UIViewController *)vc complete:(void (^)(id sender))complete;
 ```
 
-### 5.7.2 参数说明
+### 5.6.2 参数说明
 
 **输入**
 
@@ -559,7 +503,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 | desc | NSString | 调用描述 |否 |
 
 
-### 5.7.3 示例
+### 5.6.3 示例
 
 **代码**
 
@@ -596,10 +540,10 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 ```
 
-## 5.8. TYRZUILogin.h中的setCustomSMS方法
+## 5.7. TYRZUILogin.h中的setCustomSMS方法
 
 
-### 5.8.1 接口说明
+### 5.7.1 接口说明
 
 **功能**
 
@@ -611,7 +555,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)setCustomSMS:(BOOL)enable;
 ```
 
-### 5.8.2 参数说明
+### 5.7.2 参数说明
 
 **输入**
 
@@ -624,7 +568,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 无
 
-### 5.8.3 示例
+### 5.7.3 示例
 
 **代码**
 
