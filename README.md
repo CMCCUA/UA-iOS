@@ -164,111 +164,11 @@
 
 无
 
-## 5.2. TYRZBaseApi.h中的checkToken:complete:方法
+
+## 5.2.TYRZBaseApi.h中的cleanAccount方法
+
 
 ### 5.2.1 接口说明
-
-**功能**
-
-接口用于验证token是否正确
-
-**原型**
-
-```objective-c
-+ (void)checkToken:(NSString *)token complete:(UAFinishBlock)complete;
-```
-
-### 5.2.2 参数说明
-
-**输入**
-
-
-| 参数 | 类型 | 说明 |是否必填 |
-| --- | --- | --- | --- |
-| token | NSString | 需要校验的token |是 | 
-|complete|UAFinishBlock|校验token的回调 | 否|
-
-**输出**
-
-complete的参数为NSDictionary类型，里面可能包含的参数含义如下
-
-
-| 参数名称 | 约束 | 层级 | 参数类型 | 说明 |
-| --- | --- | --- | --- | --- |
-| header | 必选 | 1 |  |  |
-| version | 必选 | 2 | string | 1.0  |
-| inresponseto |  必选| 2 | string |  对应的请求消息中的msgid|
-| systemtime | 必选 |  2|string  | 响应消息发送的系统时间，精确到毫秒，共17位，格式：20121227180001165 |
-| resultcode | 必选 | 2 | string | 返回码 |
-| body | 必选 | 1 |  |  |
-|userid  | 必选 | 2 | string |系统中用户的唯一标识  |
-| pcid | 必选 |  2| string | 伪码id |
-| usessionid |可选  | 2 |string  |  暂忽略|
-| passid | 可选| 2 | string | 用户统一账号的系统标识 |
-|andid  | 可选 | 2 | string | 用户的“和ID” |
-| msisdn | 可选 | 2 | string | 表示手机号码 |
-| email | 可选 | 2 | string |表示邮箱地址  |
-| loginidtype | 可选 | 2 | string |登录使用的用户标识：0：手机号码 1：邮箱|
-| msisdntype |  可选| 2 | string | 手机号码的归属运营商：0：中国移动 1：中国电信 2：中国联通 99：未知的异网手机号码 |
-| province | 可选 | 2 | string | 用户所属省份(暂无) |
-| authtype | 可选 |2  | string | 认证方式，取值参见附录三 |
-| authtime | 可选 | 2 | string  | 统一认证平台认证用户的时间 |
-| lastactivetime |  可选| 2 |   string| 暂无 |
-| relateToAndPassport |  可选| 2 |  string | 是否已经关联到统一账号，暂无用处 |
-|fromsourceid  | 可选 | 2 |  string |来源sourceid（即签发token sourceid）  |
-| tosourceid |可选  | 2 |  string |目的sourceid（即被登录业务sourceid）|
-
-### 5.2.3 示例
-
-**代码**
-
-```objective-c
-    [TYRZBaseApi checkToken:self.token complete:^(id sender) {
-        NSDictionary *header = sender[@"header"];
-        if (header != nil) {
-            NSMutableDictionary *result = [NSMutableDictionary dictionaryWithDictionary:sender];
-            NSString *resultCode = header[@"resultcode"];
-            if ([resultCode isEqualToString:SUCCESSCODE]) {
-                result[@"result"] = @"校验token成功";
-            } else {
-                result[@"result"] = @"校验token失败";
-            }
-            [self showInfo:result];
-        } else {
-            [self showInfo:sender];
-        }
-    }];
-```
-
-**返回**
-
-```
-{
-    body =     {
-        authtime = "2017-08-18 10:52:24";
-        authtype = WAPGW;
-        lastactivetime = "";
-        loginidtype = 0;
-        msisdn = 13902220743;
-        msisdntype = 0;
-        passid = 1918310031;
-        relateToAndPassport = 1;
-        usessionid = "QkU5MkJCMDg0MTVCODA3M0U0@http://120.197.235.27:8080/rs/@01";
-    };
-    header =     {
-        inresponseto = 4aaf6e26c1fd4f1f8e36e88b1a7261be;
-        resultcode = 103000;
-        systemtime = 20170818105227632;
-        version = "1.0";
-    };
-```
-
-
-
-## 5.3.TYRZBaseApi.h中的cleanAccount方法
-
-
-### 5.3.1 接口说明
 
 **功能**
 
@@ -280,7 +180,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)cleanAccount;
 ```
 
-### 5.3.2 参数说明
+### 5.2.2 参数说明
 
 **输入**
 
@@ -290,7 +190,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 无
 
-### 5.3.3 示例
+### 5.2.3 示例
 
 **代码**
 
@@ -312,10 +212,10 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 无
 
 
-## 5.4. TYRZLogin.h中的loginImplicitly方法
+## 5.3. TYRZLogin.h中的loginImplicitly方法
 
 
-### 5.4.1 接口说明
+### 5.3.1 接口说明
 
 **功能**
 
@@ -327,7 +227,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginImplicitly:(void (^)(id sender))complete;
 ```
 
-### 5.4.2 参数说明
+### 5.3.2 参数说明
 
 **输入**
 
@@ -351,7 +251,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 |
 
-### 5.4.3 示例
+### 5.3.3 示例
 
 **代码**
 
@@ -395,10 +295,10 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 
 
-## 5.5.TYRZUILogin.h中的loginSMS: complete:方法
+## 5.4.TYRZUILogin.h中的loginSMS: complete:方法
 
 
-### 5.5.1 接口说明
+### 5.4.1 接口说明
 
 **功能**
 
@@ -410,7 +310,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginSMS:(UIViewController *)vc complete:(void (^)(id sender))complete;
 ```
 
-### 5.5.2 参数说明
+### 5.4.2 参数说明
 
 **输入**
 
@@ -434,7 +334,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 
 
-### 5.5.3 示例
+### 5.4.3 示例
 
 **代码**
 
@@ -468,9 +368,9 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 ```
 
-## 5.6.TYRZUILogin中的loginExplicitly:complete:方法
+## 5.5.TYRZUILogin中的loginExplicitly:complete:方法
 
-### 5.6.1 接口说明
+### 5.5.1 接口说明
 
 **功能**
 
@@ -482,7 +382,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)loginExplicitly:(UIViewController *)vc complete:(void (^)(id sender))complete;
 ```
 
-### 5.6.2 参数说明
+### 5.5.2 参数说明
 
 **输入**
 
@@ -503,7 +403,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 | desc | NSString | 调用描述 |否 |
 
 
-### 5.6.3 示例
+### 5.5.3 示例
 
 **代码**
 
@@ -540,10 +440,10 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 ```
 
-## 5.7. TYRZUILogin.h中的setCustomSMS方法
+## 5.6. TYRZUILogin.h中的setCustomSMS方法
 
 
-### 5.7.1 接口说明
+### 5.6.1 接口说明
 
 **功能**
 
@@ -555,7 +455,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 + (void)setCustomSMS:(BOOL)enable;
 ```
 
-### 5.7.2 参数说明
+### 5.6.2 参数说明
 
 **输入**
 
@@ -568,7 +468,7 @@ complete的参数为NSDictionary类型，里面可能包含的参数含义如下
 
 无
 
-### 5.7.3 示例
+### 5.6.3 示例
 
 **代码**
 
